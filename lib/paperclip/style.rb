@@ -23,17 +23,17 @@ module Paperclip
         @other_args = definition
       elsif definition.is_a? String
         @geometry = definition
-        @format = format
+        @format = nil
         @other_args = {}
       else
-        @geometry, @format = [definition, format].flatten[0..1]
+        @geometry, @format = [definition, nil].flatten[0..1]
         @other_args = {}
       end
-      @format  = nil if @format.blank?
+      @format  = default_format if @format.blank?
     end
 
     # defaults to default format
-    def format
+    def default_format
       base = attachment.options[:default_format]
       base.respond_to?(:call) ? base.call(attachment, name) : base
     end
