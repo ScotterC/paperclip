@@ -9,6 +9,7 @@ module Paperclip
   class Attachment
     def self.default_options
       @default_options ||= {
+        :default_format        => nil,
         :convert_options       => {},
         :default_style         => :original,
         :default_url           => "/:attachment/:style/missing.png",

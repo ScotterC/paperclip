@@ -23,13 +23,19 @@ module Paperclip
         @other_args = definition
       elsif definition.is_a? String
         @geometry = definition
-        @format = nil
+        @format = format
         @other_args = {}
       else
-        @geometry, @format = [definition, nil].flatten[0..1]
+        @geometry, @format = [definition, format].flatten[0..1]
         @other_args = {}
       end
       @format  = nil if @format.blank?
+    end
+
+    # defaults to default format
+    def format
+      base = attachment.options[:default_format]
+      base.respond_to?(:call) ? base.call(attachment, name) : base
     end
 
     # retrieves from the attachment the processors defined in the has_attached_file call
